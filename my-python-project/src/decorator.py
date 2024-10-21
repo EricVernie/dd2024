@@ -1,6 +1,3 @@
-from functools import wraps
-from flask import request, jsonify
-from readtoken import decode_jwt
 # Le décorateur doit valider le scope User_Impersonation
 # Si le scope n'est pas présent dans le Jeton d'accès, le décorateur doit retourner une erreur 403
 # Si le scope est présent, le décorateur doit appeler la méthode read_token 
@@ -8,6 +5,11 @@ from readtoken import decode_jwt
 # Vérifier si dans le jeton il y a la présence du rôle passé en paramètre
 # Si le rôle n'est pas présent, le décorateur doit retourner une erreur 403
 # Si le rôle est présent, le décorateur doit appeler la méthode passée en paramètre
+
+from functools import wraps
+from flask import request, jsonify
+
+
 
 def validate_token(required_role):
     def decorator(f):
@@ -18,7 +20,7 @@ def validate_token(required_role):
                 return jsonify({"error": "Token is missing"}), 403
 
             # Simulate reading the token
-            token_data = decode_jwt(token,"ec5d10ef-87c0-41a2-a22d-a8a54d5cd677","https://login.microsoftonline.com/312e8fa5-668a-4188-91bf-86b88d0c392a/v2.0")
+            token_data = read_token(token)
             if 'User_Impersonation' not in token_data.get('scope', []):
                 return jsonify({"error": "User_Impersonation scope is missing"}), 403
 
