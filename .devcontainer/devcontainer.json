@@ -1,0 +1,17 @@
+
+{
+	"name": "Github Copilot par l'exemple",	
+	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"humao.rest-client",
+				"ms-python.python"
+			]
+		}
+	}
+}
+
+
+
