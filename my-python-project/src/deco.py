@@ -8,8 +8,10 @@
 
 from functools import wraps
 from flask import request, jsonify
+from decodetoken import decode_jwt
 
 
+__all__ = ['validate_token']
 
 def validate_token(required_role):
     def decorator(f):
@@ -20,7 +22,11 @@ def validate_token(required_role):
                 return jsonify({"error": "Token is missing"}), 403
 
             # Simulate reading the token
-            token_data = read_token(token)
+            # token_data = read_token(token)
+            token_data = decode_jwt(token,
+                                    'ec5d10ef-87c0-41a2-a22d-a8a54d5cd677', 
+                                    'https://login.microsoftonline.com/312e8fa5-668a-4188-91bf-86b88d0c392a/v2.0')
+
             if 'User_Impersonation' not in token_data.get('scope', []):
                 return jsonify({"error": "User_Impersonation scope is missing"}), 403
 
