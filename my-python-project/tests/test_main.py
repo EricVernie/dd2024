@@ -1,8 +1,10 @@
 import unittest
-# from my_python_project.main import *
+
 import sys
 sys.path.append("../src")
 from main import app
+
+    
 
 class TestMain(unittest.TestCase):
 
